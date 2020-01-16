@@ -10,6 +10,8 @@ class StoryList {
     this.stories = stories;
   }
 
+
+
   /**
    * This method is designed to be called to generate a new StoryList.
    *  It:
@@ -41,13 +43,33 @@ class StoryList {
    * - newStory - a new story object for the API with title, author, and url
    *
    * Returns the new story object
+   * 
+   * 
    */
 
-  async addStory(user, newStory) {
-    // TODO - Implement this functions!
-    // this function should return the newly created story so it can be used in
-    // the script.js file where it will be appended to the DOM
-  }
+
+
+  // static async newStoryData(token, author, title, url) {
+  //   const response = await axios.post(`${BASE_URL}/stories`, {
+  //     user: {
+  //       token,
+  //       story.author,
+  //       story.title,
+  //       story.url,
+  //     }
+  //   });
+
+
+
+
+  // async addStory(user, newStory) {
+  //   // TODO - Implement this functions!
+  //   // this function should return the newly created story so it can be used in
+  //   // the script.js file where it will be appended to the DOM
+
+  // }
+
+
 }
 
 
@@ -153,6 +175,37 @@ class User {
   }
 }
 
+
+function newStoryData(token, author, title, url) {
+  const response = axios.post(`${BASE_URL}/stories`, {
+    user: {
+      token,
+
+    }
+  })
+}
+
+
+$("story-submit-button").on("submit", function (e) {
+  console.log("this button works");
+  e.preventDefault();
+  let newStoryAuthor = $("#author").val();
+  let newStorytitle = $("#title").val();
+  let newStoryurl = $("#url").val();
+  let newStoryObj = {
+    author: newStoryAuthor,
+    title: newStorytitle,
+    url: newStoryurl
+  }
+
+  let newStoryClass = new Story(newStoryObj);
+
+})
+
+
+
+
+
 /**
  * Class to represent a single story.
  */
@@ -174,3 +227,4 @@ class Story {
     this.updatedAt = storyObj.updatedAt;
   }
 }
+

@@ -1,0 +1,19 @@
+static = function called on class and not instance
+
+class User = defining the elements of a current User
+
+function login - establishing their current info and token. posting login info and then create an instance of that user, retrieving that users favorites and own stories, and returns instance. we're logging in, we post, and get back token
+
+getLogginInUser - call API with their token - this is where it checks 
+
+nav-bar changes display
+
+
+TODOS: 
+-local storage to save token
+
+Part 2:
+-Allow user to create new story when user logs in 
+    -Adding a new form that when submitted sends data in the form to the API - responds with newly created story (POST response to append to dom?)
+
+-Append newly created story to the dom only logged in user can create a new story
