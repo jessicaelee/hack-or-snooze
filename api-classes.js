@@ -10,8 +10,6 @@ class StoryList {
     this.stories = stories;
   }
 
-
-
   /**
    * This method is designed to be called to generate a new StoryList.
    *  It:
@@ -24,6 +22,7 @@ class StoryList {
   // TODO: Note the presence of `static` keyword: this indicates that getStories
   // is **not** an instance method. Rather, it is a method that is called on the
   // class directly. Why doesn't it make sense for getStories to be an instance method?
+  // we do not want to 
 
   static async getStories() {
     // query the /stories endpoint (no auth required)
@@ -43,34 +42,49 @@ class StoryList {
    * - newStory - a new story object for the API with title, author, and url
    *
    * Returns the new story object
-   * 
-   * 
    */
 
+  async addStory(currentUser, newStory) {
+    // TODO - Implement this functions!
+    // this function should return the newly created story so it can be used in
+    // the script.js file where it will be appended to the DOM
+
+    // let response = await axios('https://hack-or-snooze-v3.herokuapp.com/stories')
+    // console.log(response)
+
+    let response = await axios({
+      url: 'https://hack-or-snooze-v3.herokuapp.com/stories',
+      params: {
+        method: 'POST',
+        token: localStorage.token,
+        story: {
+          author: newStory.author,
+          title: newStory.title,
+          url: newStory.url
+        }
+      }
+    })
+
+    return response.data;
 
 
-  // static async newStoryData(token, author, title, url) {
-  //   const response = await axios.post(`${BASE_URL}/stories`, {
-  //     user: {
-  //       token,
-  //       story.author,
-  //       story.title,
-  //       story.url,
-  //     }
-  //   });
-
-
-
-
-  // async addStory(user, newStory) {
-  //   // TODO - Implement this functions!
-  //   // this function should return the newly created story so it can be used in
-  //   // the script.js file where it will be appended to the DOM
-
-  // }
-
-
+    // let response = await axios.post("https://hack-or-snooze-v3.herokuapp.com/ stories", headers: Content - Type: {
+    //   params: {
+    //     token: currentUser.loginToken,
+    //     story: {
+    //       author: newStory.author,
+    //       title: newStory.title,
+    //       url: newStory.url
+    //     }
+    //   }
+    // }
+    // )
+    // console.log(response);
+  }
 }
+
+
+
 
 
 /**
@@ -132,6 +146,8 @@ class User {
       }
     });
 
+    user = response;
+
     // build a new User instance from the API response
     const existingUser = new User(response.data.user);
 
@@ -141,9 +157,10 @@ class User {
 
     // attach the token to the newUser instance for convenience
     existingUser.loginToken = response.data.token;
-
     return existingUser;
   }
+
+
 
   /** Get user instance for the logged-in-user.
    *
@@ -175,36 +192,7 @@ class User {
   }
 }
 
-
-function newStoryData(token, author, title, url) {
-  const response = axios.post(`${BASE_URL}/stories`, {
-    user: {
-      token,
-
-    }
-  })
-}
-
-
-$("story-submit-button").on("submit", function (e) {
-  console.log("this button works");
-  e.preventDefault();
-  let newStoryAuthor = $("#author").val();
-  let newStorytitle = $("#title").val();
-  let newStoryurl = $("#url").val();
-  let newStoryObj = {
-    author: newStoryAuthor,
-    title: newStorytitle,
-    url: newStoryurl
-  }
-
-  let newStoryClass = new Story(newStoryObj);
-
-})
-
-
-
-
+// const existingUser = new User.
 
 /**
  * Class to represent a single story.
@@ -227,4 +215,5 @@ class Story {
     this.updatedAt = storyObj.updatedAt;
   }
 }
+
 

@@ -220,11 +220,44 @@ $(async function () {
   })
 
 
+
+
   function syncCurrentUserToLocalStorage() {
     if (currentUser) {
       localStorage.setItem("token", currentUser.loginToken);
       localStorage.setItem("username", currentUser.username);
     }
   }
+
+
+  // ?? //
+  $("#story-submit-button").on("click", async function (e) {
+    e.preventDefault();
+    console.log("this button works");
+    let newStoryAuthor = $("#author").val();
+    let newStorytitle = $("#title").val();
+    let newStoryurl = $("#url").val();
+    let newStoryObj = {
+      author: newStoryAuthor,
+      title: newStorytitle,
+      url: newStoryurl
+    }
+
+    let newStoryClass = new Story(newStoryObj);
+    // ^ where do we input newStoryClass?
+    let newStoryAdded = new StoryList(newStoryClass);
+    let storyResponse = await newStoryAdded.addStory(currentUser, newStoryClass);
+    console.log("storyResponse is ", storyResponse);
+
+    let storyHTMLMarkup = generateStoryHTML(storyResponse);
+    storyResponse.prepend(storyHTMLMarkup);
+
+
+  })
+
+
+
+
+
 });
 
