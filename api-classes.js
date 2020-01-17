@@ -192,3 +192,19 @@ class Story {
   }
 }
 
+
+async function addFavorite(currentUser, storyId) {
+  console.log("currentUser is ", currentUser);
+  console.log("storyId is ", storyId);
+  let username = currentUser.username;
+  const response = await axios({
+    method: "POST",
+    url: `${BASE_URL}/users/${username}/favorites/${storyId}`,
+    data: {
+      token: currentUser.loginToken
+    }
+  });
+
+  console.log("addFav response.data is ", response.data);
+  return response.data;
+}

@@ -163,7 +163,7 @@ $(async function () {
     const storyMarkup = $(`
       <li id="${story.storyId}">
         <a class="article-link" href="${story.url}" target="a_blank">
-          <strong>${story.title}</strong>
+          <i id="star-${story.storyId}" class="far fa-star"></i><strong>${story.title}</strong>
         </a>
         <small class="article-author">by ${story.author}</small>
         <small class="article-hostname ${hostName}">(${hostName})</small>
@@ -174,6 +174,25 @@ $(async function () {
     console.log("StoryMarkup is...", storyMarkup)
 
     return storyMarkup;
+  }
+
+  /* A func to render HTML for story favorites list */
+
+  function generateFavoritesHTML(story) {
+    let hostName = getHostName(story.url);
+
+    const favoriteMarkup = $(`
+    <li id="fav-${story.storyId}">
+      <a class="article-link" href="${story.url}" target="a_blank">
+      ${story.title}
+      </a>
+      <small class="article-author">by ${story.author}</small>
+      <small class="article-hostname ${hostName}">(${hostName})</small>
+      <small class="article-username">posted by ${story.username}</small>
+    </li>
+    `);
+
+    return favoriteMarkup;
   }
 
   /* hide all elements in elementsArr */
@@ -225,6 +244,19 @@ $(async function () {
     }
   }
 
+  // event listener for favoriting stories (STAR ICON)
+  $("#all-articles-list").on("click", ".far", async function (e) {
+    e.preventDefault();
+    $(e.target).attr("class", "fas fa-star"); // changes to filled in star
+    addFavorite(currentUser, $(e.target).parent().parent().attr("id")); // calls this func
+    let favoriteHTML = generateFavoritesHTML(story)
+    /* [IN PROGRESS] */
+  })
+
+  $("#favorites-link").on("click", function () {
+    $("#favorited-articles").show();
+    $("#all-articles-list").hide();
+  })
 
   $("#story-submit-button").on("click", async function (e) {
     e.preventDefault();
@@ -237,7 +269,6 @@ $(async function () {
       url: newStoryurl
     }
 
-
     let newStoryAdded = new StoryList(newStoryObj);
     let storyResponse = await newStoryAdded.addStory(currentUser, newStoryObj);
     console.log("storyResponse is ", storyResponse);
@@ -245,9 +276,7 @@ $(async function () {
     //i created newStoryClass so that we could put it into storyHTMLMarkup
     let newStoryClass = new Story(storyResponse.story)
 
-    let storyHTMLMarkup = generateStoryHTML(newStoryClass)
-
-      ;
+    let storyHTMLMarkup = generateStoryHTML(newStoryClass);
     // $("#all-articles-list").prepend(storyHTMLMarkup);
 
   })
@@ -257,5 +286,7 @@ $(async function () {
 function addStoryToMyStories(story) {
 
 }
+
+
 
 
