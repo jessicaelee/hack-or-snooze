@@ -27,7 +27,6 @@ class StoryList {
   static async getStories() {
     // query the /stories endpoint (no auth required)
     const response = await axios.get(`${BASE_URL}/stories`);
-
     // turn the plain old story objects from the API into instances of the Story class
     const stories = response.data.stories.map(story => new Story(story));
 
@@ -44,38 +43,10 @@ class StoryList {
    * Returns the new story object
    */
 
-
-
-
-
-
-
-
-
-
-
-
-
   async addStory(currentUser, storyObj) {
     // TODO - Implement this functions!
     // this function should return the newly created story so it can be used in
     // the script.js file where it will be appended to the DOM
-
-    // let response = await axios('https://hack-or-snooze-v3.herokuapp.com/stories')
-    // console.log(response)
-    // console.log(currentUser, storyObj);
-
-    // let response = await axios({
-    //   method: 'POST',
-    //   url: 'https://hack-or-snooze-v3.herokuapp.com/stories',
-    //   data: {
-    //     token: currentUser.loginToken,
-    //     story: storyObj
-    //   }
-    // })
-
-    console.log('currentUser....', currentUser)
-    console.log('storyObj...', storyObj)
 
     const response = await axios({
       method: "POST",
@@ -88,43 +59,9 @@ class StoryList {
       }
     });
 
-
-    // let response = await axios('https://hack-or-snooze-v3.herokuapp.com/stories',
-    //   {
-    //     params: {
-    //       method: 'POST',
-    //       token: localStorage.token,
-    //       story: {
-    //         author: newStoryClass.author,
-    //         title: newStoryClass.title,
-    //         url: newStoryClass.url
-    //       }
-    //     }
-
-
-
-    // })
-    console.log(response)
     return response.data;
-
-
-    // let response = await axios.post("https://hack-or-snooze-v3.herokuapp.com/ stories", headers: Content - Type: {
-    //   params: {
-    //     token: currentUser.loginToken,
-    //     story: {
-    //       author: newStory.author,
-    //       title: newStory.title,
-    //       url: newStory.url
-    //     }
-    //   }
-    // }
-    // )
-    // console.log(response);
   }
 }
-
-
-
 
 
 /**
@@ -238,13 +175,12 @@ class User {
  * Class to represent a single story.
  */
 
+/**
+* The constructor is designed to take an object for better readability / flexibility
+* - storyObj: an object that has story properties in it
+*/
+
 class Story {
-
-  /**
-   * The constructor is designed to take an object for better readability / flexibility
-   * - storyObj: an object that has story properties in it
-   */
-
   constructor(storyObj) {
     this.author = storyObj.author;
     this.title = storyObj.title;
@@ -255,5 +191,4 @@ class Story {
     this.updatedAt = storyObj.updatedAt;
   }
 }
-
 

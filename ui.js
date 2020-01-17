@@ -171,6 +171,8 @@ $(async function () {
       </li>
     `);
 
+    console.log("StoryMarkup is...", storyMarkup)
+
     return storyMarkup;
   }
 
@@ -192,9 +194,6 @@ $(async function () {
     $navLogin.hide();
     $navLogOut.show();
     $mainNavLinks.show();
-
-
-
   }
 
   /* simple function to pull the hostname from a URL */
@@ -219,9 +218,6 @@ $(async function () {
     $submitForm.show();
   })
 
-
-
-
   function syncCurrentUserToLocalStorage() {
     if (currentUser) {
       localStorage.setItem("token", currentUser.loginToken);
@@ -230,10 +226,8 @@ $(async function () {
   }
 
 
-  // ?? //
   $("#story-submit-button").on("click", async function (e) {
     e.preventDefault();
-    console.log("this button works");
     let newStoryAuthor = $("#author").val();
     let newStorytitle = $("#title").val();
     let newStoryurl = $("#url").val();
@@ -243,23 +237,25 @@ $(async function () {
       url: newStoryurl
     }
 
-    let newStoryClass = new Story(newStoryObj);
 
-    // ^ where do we input newStoryClass?
-    let newStoryAdded = new StoryList(newStoryClass);
-    // console.log(newStoryAdded);
+    let newStoryAdded = new StoryList(newStoryObj);
     let storyResponse = await newStoryAdded.addStory(currentUser, newStoryObj);
-    // console.log("storyResponse is ", storyResponse);
+    console.log("storyResponse is ", storyResponse);
 
-    let storyHTMLMarkup = generateStoryHTML(storyResponse);
-    $("#all-articles-list").prepend(storyHTMLMarkup);
+    //i created newStoryClass so that we could put it into storyHTMLMarkup
+    let newStoryClass = new Story(storyResponse.story)
 
+    let storyHTMLMarkup = generateStoryHTML(newStoryClass)
+
+      ;
+    // $("#all-articles-list").prepend(storyHTMLMarkup);
 
   })
-
-
-
-
-
 });
+
+//function to add stories we create to #my-articles .hidden.articles-list
+function addStoryToMyStories(story) {
+
+}
+
 
