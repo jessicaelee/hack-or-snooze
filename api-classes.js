@@ -44,27 +44,67 @@ class StoryList {
    * Returns the new story object
    */
 
-  async addStory(currentUser, newStory) {
+
+
+
+
+
+
+
+
+
+
+
+
+  async addStory(currentUser, storyObj) {
     // TODO - Implement this functions!
     // this function should return the newly created story so it can be used in
     // the script.js file where it will be appended to the DOM
 
     // let response = await axios('https://hack-or-snooze-v3.herokuapp.com/stories')
     // console.log(response)
+    // console.log(currentUser, storyObj);
 
-    let response = await axios({
-      url: 'https://hack-or-snooze-v3.herokuapp.com/stories',
-      params: {
-        method: 'POST',
-        token: localStorage.token,
-        story: {
-          author: newStory.author,
-          title: newStory.title,
-          url: newStory.url
-        }
+    // let response = await axios({
+    //   method: 'POST',
+    //   url: 'https://hack-or-snooze-v3.herokuapp.com/stories',
+    //   data: {
+    //     token: currentUser.loginToken,
+    //     story: storyObj
+    //   }
+    // })
+
+    console.log('currentUser....', currentUser)
+    console.log('storyObj...', storyObj)
+
+    const response = await axios({
+      method: "POST",
+      url: `${BASE_URL}/stories`,
+      data: {
+        // request body
+        // this is the format specified by the API
+        token: currentUser.loginToken,
+        story: storyObj,
       }
-    })
+    });
 
+
+    // let response = await axios('https://hack-or-snooze-v3.herokuapp.com/stories',
+    //   {
+    //     params: {
+    //       method: 'POST',
+    //       token: localStorage.token,
+    //       story: {
+    //         author: newStoryClass.author,
+    //         title: newStoryClass.title,
+    //         url: newStoryClass.url
+    //       }
+    //     }
+
+
+
+    // })
+    console.log(response)
     return response.data;
 
 

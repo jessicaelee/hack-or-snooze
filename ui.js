@@ -244,13 +244,15 @@ $(async function () {
     }
 
     let newStoryClass = new Story(newStoryObj);
+
     // ^ where do we input newStoryClass?
     let newStoryAdded = new StoryList(newStoryClass);
-    let storyResponse = await newStoryAdded.addStory(currentUser, newStoryClass);
-    console.log("storyResponse is ", storyResponse);
+    // console.log(newStoryAdded);
+    let storyResponse = await newStoryAdded.addStory(currentUser, newStoryObj);
+    // console.log("storyResponse is ", storyResponse);
 
     let storyHTMLMarkup = generateStoryHTML(storyResponse);
-    storyResponse.prepend(storyHTMLMarkup);
+    $("#all-articles-list").prepend(storyHTMLMarkup);
 
 
   })
